@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReminderApps • {{ auth()->user()->name ?? '' }}</title>
+    <title>ReminderApps • {{ auth()->check() ? auth()->user()->name : '' }}</title>
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    {{-- PWA (boleh dinyalakan lagi nanti kalau sudah stabil) --}}
+    {{-- PWA Configuration --}}
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#8b5cf6">
+
     <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -29,14 +32,15 @@
 
     @livewireScripts
 
-    {{-- MATIKAN SERVICE WORKER DULU BIAR GA NGACAU CACHE --}}
-    {{-- 
+    {{-- Service Worker Registration --}}
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+                .register("/sw.js")
+                .then(() => console.log("Service Worker Registered"));
         }
-    </script> 
-    --}}
+    </script>
+
 
     <script>
         document.addEventListener('alpine:init', () => {

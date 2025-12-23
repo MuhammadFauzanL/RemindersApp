@@ -24,7 +24,7 @@
                 class="dashboard-title"
                 style="font-size:22px; margin-top:14px; margin-bottom:4px;"
             >
-                Masuk ke akunmu
+                Buat akun baru
             </h1>
         </div>
 
@@ -34,13 +34,29 @@
             </div>
         @endif
 
-        {{-- Form login --}}
+        {{-- Form register --}}
         <form
             method="POST"
-            action="{{ route('login.process') }}"
+            action="{{ route('register.process') }}"
             style="display:flex; flex-direction:column; gap:12px; margin-top:8px; text-align:left;"
         >
             @csrf
+
+            <div>
+                <label for="name" style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">
+                    Nama
+                </label>
+                <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    class="input"
+                    value="{{ old('name') }}"
+                    required
+                    autofocus
+                    placeholder="Masukkan nama"
+                >
+            </div>
 
             <div>
                 <label for="nim" style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">
@@ -53,8 +69,22 @@
                     class="input"
                     value="{{ old('nim') }}"
                     required
-                    autofocus
                     placeholder="Masukkan NIM"
+                >
+            </div>
+
+            <div>
+                <label for="email" style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">
+                    Email
+                </label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    class="input"
+                    value="{{ old('email') }}"
+                    required
+                    placeholder="Masukkan email"
                 >
             </div>
 
@@ -68,21 +98,35 @@
                     name="password"
                     class="input"
                     required
-                    placeholder="Password"
+                    placeholder="Password (min. 8 karakter)"
+                >
+            </div>
+
+            <div>
+                <label for="password_confirmation" style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">
+                    Konfirmasi Password
+                </label>
+                <input
+                    id="password_confirmation"
+                    type="password"
+                    name="password_confirmation"
+                    class="input"
+                    required
+                    placeholder="Ulangi password"
                 >
             </div>
 
             <button type="submit" class="btn" style="margin-top:6px;">
-                Masuk
+                Daftar
             </button>
         </form>
 
         <div style="margin-top:18px; padding-top:18px; border-top:1px solid rgba(139,92,246,0.2); text-align:center;">
             <p style="font-size:13px; opacity:0.7; margin-bottom:8px;">
-                Belum punya akun?
+                Sudah punya akun?
             </p>
             <a
-                href="{{ route('register') }}"
+                href="{{ route('login') }}"
                 style="
                     color:#8b5cf6;
                     text-decoration:none;
@@ -90,9 +134,10 @@
                     font-size:14px;
                 "
             >
-                Daftar di sini
+                Masuk di sini
             </a>
         </div>
     </div>
 </div>
 @endsection
+
